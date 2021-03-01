@@ -76,4 +76,8 @@ public class GameManager : MonoBehaviour
     {
         _saveManager.Save();
     }
+    private void OnApplicationPause()
+    {
+        _saveManager.Save();
+    }
 }
