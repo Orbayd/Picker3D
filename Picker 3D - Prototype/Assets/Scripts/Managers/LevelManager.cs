@@ -28,8 +28,8 @@ public class LevelManager : ManagerBase
     public override void Init(GameManager serviceLocator)
     {
         _picker = serviceLocator.Picker;
-        //var entity = serviceLocator.SaveManager.Load();
-        SaveEntity entity = null;
+        var entity = serviceLocator.SaveManager.Load();
+        //SaveEntity entity = null;
         if (entity== null || !entity.IsSavedData)
         {
             _currentSection = Get(0);
@@ -42,6 +42,7 @@ public class LevelManager : ManagerBase
             _currentLevel = entity.LevelEntity.CurrentLevel;
             _currentSection.Init(entity.LevelEntity);
             _currentSection.ChangeMaterial(LevelDb.GetLevel(entity.LevelEntity.LevelIndex - 1).BoardMaterial);
+
             _picker.Init(entity.PlayerEntity.Position);
         }
     }
