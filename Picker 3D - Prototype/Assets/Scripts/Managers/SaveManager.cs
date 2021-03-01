@@ -67,9 +67,4 @@ public class SaveManager : ManagerBase
 
        
     }
-
-    public override void UpdateState(IGameState gameState)
-    {
-        //Do nothing
-    }
 }

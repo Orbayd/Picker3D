@@ -7,8 +7,7 @@ using UnityEngine;
 
 public class LevelManager : ManagerBase
 {
-    [SerializeField]
-    private Picker Picker;
+    private Picker _picker;
 
     private List<LevelSection> _activelevels = new List<LevelSection>();
     private Stack<LevelSection> _passivelevels = new Stack<LevelSection>();
@@ -23,7 +22,7 @@ public class LevelManager : ManagerBase
 
     public bool IsDestinationReached()
     {
-        return _currentSection.IsEndSection(Picker.MaxExtends());
+        return _currentSection.IsEndSection(_picker.MaxExtends());
     }
 
     public override void Init(GameManager serviceLocator)
@@ -34,7 +33,7 @@ public class LevelManager : ManagerBase
         {
             _currentSection = Get(0);
             _currentSection.Init(LevelDb.GetLevel(0));
-            Picker.Init(_currentSection.StartPosition());
+            _picker.Init(_currentSection.StartPosition());
         }
         else
         {
@@ -42,7 +41,7 @@ public class LevelManager : ManagerBase
             _currentLevel = entity.LevelEntity.CurrentLevel;
             _currentSection.Init(entity.LevelEntity);
             _currentSection.ChangeMaterial(LevelDb.GetLevel(entity.LevelEntity.LevelIndex - 1).BoardMaterial);
-            Picker.Init(entity.PlayerEntity.Position);
+            _picker.Init(entity.PlayerEntity.Position);
         }
     }
     public override void UpdateState(IGameState gameState)
@@ -61,7 +60,7 @@ public class LevelManager : ManagerBase
         //_currentSection = Get(_currentLevel);
         _currentSection.Init(LevelDb.GetLevel(_currentLevel));
 
-        Picker.Init(_currentSection.StartPosition());
+        _picker.Init(_currentSection.StartPosition());
     }
 
     public void LoadNextLevel()

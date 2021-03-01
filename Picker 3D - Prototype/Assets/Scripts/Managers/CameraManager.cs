@@ -11,22 +11,22 @@ public class CameraManager : ManagerBase
 
     public Vector3 Cameraoffset;
 
-    public Picker Picker;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Vector3 CameraAngle;
 
+    private Picker _picker;
+
+   
     // Update is called once per frame
     void Update()
     {
-        Camera.transform.position = Picker.transform.position + Cameraoffset;
-        Camera.transform.LookAt(Picker.transform);
+        Camera.transform.position = _picker.transform.position + Cameraoffset;
+        Camera.transform.rotation = Quaternion.Euler(CameraAngle);
+        //Camera.transform.LookAt(Picker.transform);
     }
 
     public override void Init(GameManager serviceLocator)
     {
-        Picker = serviceLocator.Picker;
+        _picker = serviceLocator.Picker;
     }
+
 }
