@@ -38,6 +38,7 @@ public class UIManager : ManagerBase
     private void UpdateLevelInfo()
     {
         GamePlayView.SetLevel(_serviceLocator.LevelManager.CurrentLevel);
+        UpdateScore();
         
     }
     public void UpdateScore()
