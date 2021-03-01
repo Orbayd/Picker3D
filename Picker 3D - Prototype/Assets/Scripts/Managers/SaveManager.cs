@@ -46,7 +46,8 @@ public class SaveManager : MonoBehaviour
         {
             CurrentProbCount = LevelManager.CurrentLevel.CurrentProbCount,
             ExpectedProbCount = LevelManager.CurrentLevel.ExpectedProbCount,
-            ActiveProbs = LevelManager.CurrentLevel.ActiveProbs.Select(x => new ProbEntity() { Position = x.transform.position }).ToList(),
+            ActiveProbs = LevelManager.CurrentLevel.ActiveProbs.Select(x => new ProbEntity(){ Position = x.transform.position ,
+                                                                                              ProbType = x.GetComponent<Probs>().ProbType }).ToList(),
             LevelIndex = LevelManager.CurrentLevelIndex,
             PrefabIndex = LevelManager.CurrentPrefabIndex,
             Position = LevelManager.CurrentLevel.transform.position

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 689fa510ab77447cbb2f8ff3dccdd711, type: 3}
+  m_Name: LevelSectionDatabase_8
+  m_EditorClassIdentifier: 
+  ProbPrefabs:
+  - {fileID: 3416445374815943158, guid: 16f0350fe2a544034a8847e3d2b0eb11, type: 3}
+  Level: 8
+  ExpectedProb: 2
+  ProbPositions:
+  - {x: 0.15, y: 0.6, z: 2.0732477}
+  - {x: 0.57, y: 0.6, z: 2.0732477}
+  ProbType: 0000000000000000
+  BoardMaterial: {fileID: 2100000, guid: 0d9f256d18c254a65ae4d78c4a28f913, type: 2}

@@ -338,6 +338,9 @@ MonoBehaviour:
   ProbHolder: {fileID: 7129893312156562714}
   LevelIndex: 1
   ExpectedProbCount: 2
+  CurrentProbCount: 0
+  ActiveProbs: []
+  LevelSectionDb: {fileID: 11400000, guid: 54d0975971e134f03bcedc1dd4e8c190, type: 2}
 --- !u!1 &7129893314038794000
 GameObject:
   m_ObjectHideFlags: 0

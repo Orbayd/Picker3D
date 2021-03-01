@@ -16,4 +16,5 @@ public class LevelEntity
 public class ProbEntity
 {
     public Vector3 Position { get; set; }
+    public ProbType ProbType { get; set; }
 }

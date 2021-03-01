@@ -17,14 +17,14 @@ public class ServiceLocator : MonoBehaviour
     [SerializeField]
     SaveManager _saveManager;
 
-    public StartView StartView;
-
-    public GameOverView GameOverView;
+    [SerializeField]
+    UIManager _uiManager;
 
     public PoolManager PoolManager => _poolManager;
     public CameraManager CameraManager => _cameraManager;
     public LevelManager LevelManager => _levelManager;
     public SaveManager SaveManager => _saveManager;
+    public UIManager UIManager => _uiManager;
 
     public Picker Picker;
 
@@ -40,18 +40,23 @@ public class ServiceLocator : MonoBehaviour
         Instance = this;
 
         _saveManager.Init(this);
-        
+        _uiManager.Init(this);
         _cameraManager.Init(this);
         _levelManager.Init(this);
 
-
         _gameState = new StartState(this);
         _gameState.OnEnter();
+        this.DelayedAction(() =>
+        {
+            
+
+        }, 2.0f);
+       
        
     }
     private void Update()
     {
-        _gameState.OnExecute();
+        _gameState?.OnExecute();
     }
 
     

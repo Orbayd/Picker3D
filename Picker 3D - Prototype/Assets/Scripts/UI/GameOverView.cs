@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameOverView : MonoBehaviour
+public class GameOverView : ViewBase
 {
     [SerializeField]
     private Button RestartButton;
@@ -33,10 +33,5 @@ public class GameOverView : MonoBehaviour
         {
             RestartButton.gameObject.SetActive(true);
         }
-    }
-
-    public void Show(bool IsVisible)
-    {
-        this.gameObject.SetActive(IsVisible);
-    }   
+    } 
 }

@@ -26,35 +26,42 @@ public class LevelSection : MonoBehaviour
     public bool IsCompleted  => CurrentProbCount >= ExpectedProbCount;
 
     public List<GameObject> ActiveProbs = new List<GameObject>();
+    [SerializeField]
+    private LevelSectionDatabase LevelSectionDb;
+
     public void Start()
     {
         //Init();
     }
-    public void Init()
+    public void Init(LevelSectionDatabase levelSectionDb)
     {
         this.gameObject.SetActive(true);
         var poolManager = FindObjectOfType<PoolManager>();
-        var probPositions = ProbHolder.GetComponentsInChildren<Transform>().Where(x => !x.transform.Equals(ProbHolder.transform));
+        var probPositions = levelSectionDb.ProbPositions;
+        ExpectedProbCount = levelSectionDb.ExpectedProb;
+        LevelIndex = levelSectionDb.Level;
+        ChangeMaterial(levelSectionDb.BoardMaterial);
         ActiveProbs.Clear();
-        foreach (var probPos in probPositions)
+
+        for (int i = 0; i < probPositions.Length; i++)
         {
-            var prob = poolManager.Get(probPos.transform.position, Quaternion.identity);
+            var prob = poolManager.Get(levelSectionDb.ProbType[i], this.transform.position + probPositions[i], Quaternion.identity);
             ActiveProbs.Add(prob);
-            
+
             prob.GetComponent<Rigidbody>().velocity = Vector3.zero;
             prob.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         }
-        CurrentProbCount = 0;
     }
+
     public void Init(LevelEntity entity)
     {
         CurrentProbCount = entity.CurrentProbCount;
         ExpectedProbCount = entity.ExpectedProbCount;
-        //LevelIndex = entity.LevelIndex;
-
+        LevelIndex = entity.LevelIndex;
+        
         foreach (var probEntity in entity.ActiveProbs)
         {
-            var prob = ServiceLocator.Instance.PoolManager.Get(probEntity.Position, Quaternion.identity);
+            var prob = ServiceLocator.Instance.PoolManager.Get(probEntity.ProbType,probEntity.Position, Quaternion.identity);
             ActiveProbs.Add(prob);
             prob.GetComponent<Rigidbody>().velocity = Vector3.zero;
             prob.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
@@ -70,6 +77,19 @@ public class LevelSection : MonoBehaviour
         ActiveProbs.Clear();
         this.gameObject.SetActive(false);
     }
+    public void ChangeMaterial(Material mat)
+    {
+        if (mat == null)
+        {
+            return;
+        }
+        var meshRenderers = GetComponentsInChildren<MeshRenderer>().Where(x => !x.GetComponent<EndSection>());
+        foreach (var meshRenderer in meshRenderers)
+        {
+            meshRenderer.material = mat;
+        }
+    }
+
     public bool IsEndSection(Vector3 player)
     {
         return Mathf.Abs( StopSection.position.z - player.z) < 0.1f;
