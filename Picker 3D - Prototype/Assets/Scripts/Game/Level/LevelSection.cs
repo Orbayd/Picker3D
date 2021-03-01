@@ -13,9 +13,6 @@ public class LevelSection : MonoBehaviour
     [SerializeField]
     private Transform StopSection;
 
-    [SerializeField]
-    private Transform ProbHolder;
-
     [Space(2)][Header("Info")]
     [SerializeField]
     public int LevelIndex;
@@ -31,7 +28,7 @@ public class LevelSection : MonoBehaviour
 
     public void Start()
     {
-        //Init();
+ 
     }
     public void Init(LevelSectionDatabase levelSectionDb)
     {
@@ -51,6 +48,7 @@ public class LevelSection : MonoBehaviour
             prob.GetComponent<Rigidbody>().velocity = Vector3.zero;
             prob.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         }
+        CurrentProbCount = 0;
     }
 
     public void Init(LevelEntity entity)

@@ -44,13 +44,13 @@ public class SaveManager : MonoBehaviour
         var pEntity = new PlayerEntity() { Position = picker.transform.position, Speed = 4 };
         var lEntitiy = new LevelEntity()
         {
-            CurrentProbCount = LevelManager.CurrentLevel.CurrentProbCount,
-            ExpectedProbCount = LevelManager.CurrentLevel.ExpectedProbCount,
-            ActiveProbs = LevelManager.CurrentLevel.ActiveProbs.Select(x => new ProbEntity(){ Position = x.transform.position ,
+            CurrentProbCount = LevelManager.CurrentSection.CurrentProbCount,
+            ExpectedProbCount = LevelManager.CurrentSection.ExpectedProbCount,
+            ActiveProbs = LevelManager.CurrentSection.ActiveProbs.Select(x => new ProbEntity(){ Position = x.transform.position ,
                                                                                               ProbType = x.GetComponent<Probs>().ProbType }).ToList(),
-            LevelIndex = LevelManager.CurrentLevelIndex,
-            PrefabIndex = LevelManager.CurrentPrefabIndex,
-            Position = LevelManager.CurrentLevel.transform.position
+            CurrentLevel = LevelManager.CurrentLevel,
+            LevelIndex = LevelManager.CurrentSection.LevelIndex,
+            Position = LevelManager.CurrentSection.transform.position
         };
 
         var sEntity = new SaveEntity()

@@ -37,7 +37,7 @@ public class UIManager : MonoBehaviour
 
     private void UpdateLevelInfo()
     {
-        GamePlayView.SetLevel(_serviceLocator.LevelManager.CurrentLevelIndex);
+        GamePlayView.SetLevel(_serviceLocator.LevelManager.CurrentLevel);
     }
     private void UpdateGameOverInfo()
     {

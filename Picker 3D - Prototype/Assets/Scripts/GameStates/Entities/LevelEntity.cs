@@ -5,8 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class LevelEntity 
 {
+    public int CurrentLevel { get; set; }
     public int LevelIndex { get; set; }
-    public int PrefabIndex { get; set; }
     public int ExpectedProbCount { get; set; }
     public int CurrentProbCount { get; set; }
     public Vector3 Position { get; set; }

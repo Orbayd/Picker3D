@@ -46,6 +46,7 @@ public class ServiceLocator : MonoBehaviour
 
         _gameState = new StartState(this);
         _gameState.OnEnter();
+
         this.DelayedAction(() =>
         {
             

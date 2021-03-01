@@ -8,20 +8,19 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField]
-    private List<LevelSection> _levelPrefabs;
+    private Picker Picker;
 
     private List<LevelSection> _activelevels = new List<LevelSection>();
     private Stack<LevelSection> _passivelevels = new Stack<LevelSection>();
 
-    private LevelSection _currentLevel;
-    public LevelSection CurrentLevel => _currentLevel;
-    private int _currentLevelIndex = 0;
-    public int CurrentLevelIndex => _currentLevelIndex;
+    private LevelSection _currentSection;
+    private int _currentLevel = 0;
 
-    public int CurrentPrefabIndex => _levelPrefabs.IndexOf(_levelPrefabs.FirstOrDefault(x => x.LevelIndex.Equals(CurrentLevel.LevelIndex)));
+    public LevelSection CurrentSection => _currentSection;
+    public int CurrentLevel => _currentLevel;
+
     //TODO Refactor this, Currently Prototype
-    [SerializeField]
-    private Picker Picker;
+   
 
     public LevelDataBase LevelDb;
 
@@ -34,96 +33,54 @@ public class LevelManager : MonoBehaviour
 
     public bool IsDestinationReached()
     {
-        return _currentLevel.IsEndSection(Picker.MaxExtends());
+        return _currentSection.IsEndSection(Picker.MaxExtends());
     }
 
     internal void Init(ServiceLocator serviceLocator)
     {
-        //var entity = serviceLocator.SaveManager.Load();
-        SaveEntity entity = null;
+        var entity = serviceLocator.SaveManager.Load();
+        //SaveEntity entity = null;
         if (entity== null || !entity.IsSavedData)
         {
-            _currentLevel = Get(0);
-            _currentLevel.Init(LevelDb.GetLevel(0));
-            Picker.Init(_currentLevel.StartPosition());
+            _currentSection = Get(0);
+            _currentSection.Init(LevelDb.GetLevel(0));
+            Picker.Init(_currentSection.StartPosition());
         }
         else
         {
-           
-            _currentLevel = Get(0, entity.LevelEntity.Position, Quaternion.identity);
-            _currentLevelIndex = entity.LevelEntity.LevelIndex;
-            _currentLevel.Init(entity.LevelEntity);
-            _currentLevel.ChangeMaterial(LevelDb.GetLevel(entity.LevelEntity.LevelIndex).BoardMaterial);
+            _currentSection = Get(0, entity.LevelEntity.Position, Quaternion.identity);
+            _currentLevel = entity.LevelEntity.CurrentLevel;
+            _currentSection.Init(entity.LevelEntity);
+            _currentSection.ChangeMaterial(LevelDb.GetLevel(entity.LevelEntity.LevelIndex - 1).BoardMaterial);
             Picker.Init(entity.PlayerEntity.Position);
         }
     }
 
     public bool IsLevelCompleted()
     {
-        return _currentLevel.IsCompleted;
+        return _currentSection.IsCompleted;
     }
     public void Restart()
     {
-        _currentLevel.OnComplete();
-        _currentLevel = Get(_currentLevelIndex);
-        _currentLevel.Init(LevelDb.GetLevel(_currentLevelIndex));
+        _currentSection.OnComplete();
+        _currentSection = Get(_currentLevel);
+        _currentSection.Init(LevelDb.GetLevel(_currentLevel));
 
-        Picker.Init(_currentLevel.StartPosition());
+        Picker.Init(_currentSection.StartPosition());
     }
 
     public void LoadNextLevel()
     {
+        ++_currentLevel;
+        var nextLevel = Get(_currentLevel);
 
-        ++_currentLevelIndex;
-        var nextLevel = Get(_currentLevelIndex);
-
-        Attach(_currentLevel, nextLevel);
-        Free(_currentLevel);
-        _currentLevel = nextLevel;
-        _currentLevel.Init(LevelDb.GetLevel(_currentLevelIndex));
-        if (_currentLevelIndex < _levelPrefabs.Count-1)
-        {
-
-        }
-        else 
-        {
-
-            // UnityEngine.Random.state = new UnityEngine.Random.State();
-            //UnityEngine.Random.seed = System.DateTime.Now.Millisecond;
-            //var randInt = UnityEngine.Random.Range(1, 100);
-            //var randomIndex = (int)randInt % (_levelPrefabs.Count());
-            //var nextLevel = Get(randomIndex);
-            //Attach(_currentLevel, nextLevel);
-            //Free(_currentLevel);
-            //_currentLevel = nextLevel;
-            //_currentLevel.Init();
-
-            //CreateRandomLevel();       
-        }
+        Attach(_currentSection, nextLevel);
+        Free(_currentSection);
+        _currentSection = nextLevel;
+        _currentSection.Init(LevelDb.GetLevel(_currentLevel));
+ 
     }
-    //private void CreateLevel(int index)
-    //{
-    //     CreateLevel(index, Vector3.zero, Quaternion.identity);
-    //}
-    //private void CreateLevel(int index,Vector3 position, Quaternion rotation)
-    //{     
-    //    _currentLevelIndex = Mathf.Clamp(index,0,_levelPrefabs.Count-1);
-    //    if (!_activelevels.Contains(_currentLevel))
-    //    {
-    //        var level = _levelPrefabs[_currentLevelIndex];
-    //        _currentLevel = Instantiate(level, position, rotation);
-    //        _activelevels.Add(_currentLevel);
-    //       // _currentLevel.Init();
-    //    }
-    //    else
-    //    {
-    //       // _currentLevel.Init();
-    //        _currentLevel.transform.position = position;
-    //        _currentLevel.transform.rotation = rotation;
-    //    }   
-    //}
-
-
+ 
     public void Free(LevelSection levelSection)
     {
         _activelevels.Remove(levelSection);
@@ -136,12 +93,6 @@ public class LevelManager : MonoBehaviour
 
     public LevelSection Get(int index)
     {
-        //var nextLevel = _passivelevels.Count > 0 ? _passivelevels.Pop() :
-        //                Instantiate(LevelDb.LevelPrefab.GetComponent<LevelSection>(), Vector3.zero, Quaternion.identity);
-        //_activelevels.Add(nextLevel);
-
-        //return nextLevel;
-
         return Get(index, Vector3.zero, Quaternion.identity);
     }
 
