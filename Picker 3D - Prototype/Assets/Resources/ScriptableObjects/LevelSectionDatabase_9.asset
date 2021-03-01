@@ -12,12 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 689fa510ab77447cbb2f8ff3dccdd711, type: 3}
   m_Name: LevelSectionDatabase_9
   m_EditorClassIdentifier: 
-  ProbPrefabs:
-  - {fileID: 3416445374815943158, guid: 16f0350fe2a544034a8847e3d2b0eb11, type: 3}
   Level: 9
-  ExpectedProb: 2
+  ExpectedProb: 10
   ProbPositions:
   - {x: 0.15, y: 0.6, z: 2.0732477}
   - {x: 0.57, y: 0.6, z: 2.0732477}
   ProbType: 0000000000000000
-  BoardMaterial: {fileID: 2100000, guid: 06ce0489564244ba09c15d1b2807dbcf, type: 2}
+  BoardMaterial: {fileID: 2100000, guid: df5ca76cf0cfc44a49856552f4ee4b05, type: 2}

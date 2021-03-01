@@ -22,10 +22,8 @@ public class LevelSection : MonoBehaviour
     public int CurrentProbCount = 0;
     public bool IsCompleted  => CurrentProbCount >= ExpectedProbCount;
 
-    public List<GameObject> ActiveProbs = new List<GameObject>();
-    [SerializeField]
-    private LevelSectionDatabase LevelSectionDb;
-
+    public List<Probs> ActiveProbs = new List<Probs>();
+    
     public void Start()
     {
  
@@ -42,11 +40,10 @@ public class LevelSection : MonoBehaviour
 
         for (int i = 0; i < probPositions.Length; i++)
         {
-            var prob = poolManager.Get(levelSectionDb.ProbType[i], this.transform.position + probPositions[i], Quaternion.identity);
+            var probGo = poolManager.Get(levelSectionDb.ProbType[i], this.transform.position + probPositions[i], Quaternion.identity);
+            var prob = probGo.GetComponent<Probs>();
+            prob.Init();
             ActiveProbs.Add(prob);
-
-            prob.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            prob.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         }
         CurrentProbCount = 0;
     }
@@ -59,10 +56,10 @@ public class LevelSection : MonoBehaviour
         
         foreach (var probEntity in entity.ActiveProbs)
         {
-            var prob = ServiceLocator.Instance.PoolManager.Get(probEntity.ProbType,probEntity.Position, Quaternion.identity);
+            var probGo = ServiceLocator.Instance.PoolManager.Get(probEntity.ProbType,probEntity.Position, Quaternion.identity);
+            var prob = probGo.GetComponent<Probs>();
             ActiveProbs.Add(prob);
-            prob.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            prob.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+            prob.Init(probEntity.Velocity, probEntity.AngularVelocity);
         }
     }
 
@@ -73,7 +70,7 @@ public class LevelSection : MonoBehaviour
             ServiceLocator.Instance.PoolManager.Free(prob.gameObject);
         }
         ActiveProbs.Clear();
-        this.gameObject.SetActive(false);
+        
     }
     public void ChangeMaterial(Material mat)
     {
@@ -85,6 +82,21 @@ public class LevelSection : MonoBehaviour
         foreach (var meshRenderer in meshRenderers)
         {
             meshRenderer.material = mat;
+        }
+    }
+
+    public void UpdateState(IGameState gameState)
+    {
+        if (gameState is GamePlayState)
+        {
+            foreach (var prob in ActiveProbs)
+            {
+                prob.Begin();
+            }
+        }
+        else
+        {
+            
         }
     }
 
@@ -117,14 +129,29 @@ public class LevelSection : MonoBehaviour
     }
     public void CollectProbe(Probs prob)
     {
-        this.DelayedAction(() =>
-        {
-            ActiveProbs.Remove(prob.gameObject);
-            ServiceLocator.Instance.PoolManager.Free(prob.gameObject);
-            //Destroy(prob.gameObject);
+        //this.DelayedAction(() =>
+        //{
+        //    ActiveProbs.Remove(prob);
+        //    ServiceLocator.Instance.PoolManager.Free(prob.gameObject);
+        //    //Destroy(prob.gameObject);
 
-        }, 0.3f);
+        //}, 0.3f);
+
+        FreeProbe(prob);
         CurrentProbCount++;
         //Debug.Log($"[INFO] Current Prob {CurrentProbCount}");
+    }
+    public void FreeProbe(Probs prob)
+    {
+        ActiveProbs.Remove(prob);
+        ServiceLocator.Instance.PoolManager.Free(prob.gameObject);
+    }
+
+    public GameObject CreateProb(ProbType type ,Vector3 position,Quaternion rotation)
+    {
+        var prob = ServiceLocator.Instance.PoolManager.Get(type, position, rotation);
+        ActiveProbs.Add(prob.GetComponent<Probs>());
+        return prob;
+       
     }
 }

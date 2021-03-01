@@ -12,11 +12,7 @@ public class SaveManager : MonoBehaviour
     Picker picker;
 
     LevelManager LevelManager;
-    // Start is called before the first frame update
-    void Start()
-    {
-       
-    }
+
     public void Init(ServiceLocator locator)
     {
         LevelManager = locator.LevelManager;
@@ -46,8 +42,12 @@ public class SaveManager : MonoBehaviour
         {
             CurrentProbCount = LevelManager.CurrentSection.CurrentProbCount,
             ExpectedProbCount = LevelManager.CurrentSection.ExpectedProbCount,
-            ActiveProbs = LevelManager.CurrentSection.ActiveProbs.Select(x => new ProbEntity(){ Position = x.transform.position ,
-                                                                                              ProbType = x.GetComponent<Probs>().ProbType }).ToList(),
+            ActiveProbs = LevelManager.CurrentSection.ActiveProbs.Select(x => new ProbEntity(){
+                                                                        Position = x.transform.position ,
+                                                                        Velocity = x.GetComponent<Rigidbody>().velocity,
+                                                                        AngularVelocity = x.GetComponent<Rigidbody>().angularVelocity,
+                                                                        ProbType = x.GetComponent<Probs>().ProbType ,
+                                                                        }).ToList(),
             CurrentLevel = LevelManager.CurrentLevel,
             LevelIndex = LevelManager.CurrentSection.LevelIndex,
             Position = LevelManager.CurrentSection.transform.position

@@ -19,27 +19,17 @@ public class LevelManager : MonoBehaviour
     public LevelSection CurrentSection => _currentSection;
     public int CurrentLevel => _currentLevel;
 
-    //TODO Refactor this, Currently Prototype
-   
-
     public LevelDataBase LevelDb;
-
-
-    void Start()
-    {
-
-      
-    }
 
     public bool IsDestinationReached()
     {
         return _currentSection.IsEndSection(Picker.MaxExtends());
     }
 
-    internal void Init(ServiceLocator serviceLocator)
+    public void Init(ServiceLocator serviceLocator)
     {
-        var entity = serviceLocator.SaveManager.Load();
-        //SaveEntity entity = null;
+        //var entity = serviceLocator.SaveManager.Load();
+        SaveEntity entity = null;
         if (entity== null || !entity.IsSavedData)
         {
             _currentSection = Get(0);
@@ -55,6 +45,10 @@ public class LevelManager : MonoBehaviour
             Picker.Init(entity.PlayerEntity.Position);
         }
     }
+    public void UpdateState(IGameState gameState)
+    {
+        CurrentSection.UpdateState(gameState);
+    }
 
     public bool IsLevelCompleted()
     {
@@ -63,7 +57,8 @@ public class LevelManager : MonoBehaviour
     public void Restart()
     {
         _currentSection.OnComplete();
-        _currentSection = Get(_currentLevel);
+        
+        //_currentSection = Get(_currentLevel);
         _currentSection.Init(LevelDb.GetLevel(_currentLevel));
 
         Picker.Init(_currentSection.StartPosition());
@@ -71,6 +66,7 @@ public class LevelManager : MonoBehaviour
 
     public void LoadNextLevel()
     {
+        _currentSection.OnComplete();
         ++_currentLevel;
         var nextLevel = Get(_currentLevel);
 
@@ -83,11 +79,11 @@ public class LevelManager : MonoBehaviour
  
     public void Free(LevelSection levelSection)
     {
-        _activelevels.Remove(levelSection);
-        _passivelevels.Push(levelSection);
         this.DelayedAction(() =>
         {
+            _activelevels.Remove(levelSection);
             levelSection.gameObject.SetActive(false);
+            _passivelevels.Push(levelSection);
         }, 2);
     }
 

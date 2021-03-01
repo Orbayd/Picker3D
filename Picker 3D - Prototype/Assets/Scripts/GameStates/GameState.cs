@@ -26,6 +26,7 @@ public class GamePlayState : GameStateBase
 {
     public GamePlayState(ServiceLocator locator) : base(locator)
     {
+        _locator.LevelManager.UpdateState(this);
         _locator.UIManager.UpdateState(this);
     }
     public override void OnEnter()
@@ -52,11 +53,12 @@ public class GamePlayState : GameStateBase
 public class StartState : GameStateBase
 {
     public StartState(ServiceLocator locator) : base(locator)
-    { 
-
+    {
+        
     }
     public override void OnEnter()
     {
+        _locator.LevelManager.UpdateState(this);
         _locator.UIManager.UpdateState(this);
     }
 
@@ -83,6 +85,7 @@ public class GameOverState : GameStateBase
     }
     public override void OnEnter()
     {
+        _locator.LevelManager.UpdateState(this);
         _locator.DelayedAction(() =>
         {
             _locator.UIManager.UpdateState(this);
@@ -90,19 +93,6 @@ public class GameOverState : GameStateBase
             
         }, 4);
     }
-
-    private void OnRestartButtonClicked()
-    {
-        _locator.LevelManager.Restart();
-        _locator.ChangeGameState(new GamePlayState(_locator));
-    }
-
-    private void OnNextLevelButtonClicked()
-    {
-        _locator.LevelManager.LoadNextLevel();
-        _locator.ChangeGameState(new GamePlayState(_locator));
-    }
-
     public override void OnExecute()
     {
         
@@ -110,9 +100,6 @@ public class GameOverState : GameStateBase
 
     public override void OnExit()
     {
-        //_locator.GameOverView.OnNextLevelButtonClicked -= OnNextLevelButtonClicked;
-        //_locator.GameOverView.OnRestartButtonClicked -= OnRestartButtonClicked;
-        //_locator.GameOverView.Show(false);
     }
 }
 

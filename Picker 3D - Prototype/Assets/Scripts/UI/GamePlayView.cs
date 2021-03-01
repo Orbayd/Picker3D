@@ -11,7 +11,7 @@ public class GamePlayView : ViewBase
 
     public void SetLevel(int level)
     {
-        LevelText.text = $"Level {level}";
+        LevelText.text = $"Level {level + 1}";
     }
 
 }

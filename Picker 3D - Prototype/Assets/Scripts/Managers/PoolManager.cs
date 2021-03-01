@@ -59,6 +59,7 @@ public class PoolManager : MonoBehaviour
             ret.SetActive(true);
             ret.transform.position = pos;
             ret.transform.rotation = quat;
+            ret.transform.SetParent(this.transform);
             return ret;
 
         }
@@ -68,6 +69,7 @@ public class PoolManager : MonoBehaviour
             ret.SetActive(true);
             ret.transform.position = pos;
             ret.transform.rotation = quat;
+            ret.transform.SetParent(this.transform);
             return ret;
         }
 

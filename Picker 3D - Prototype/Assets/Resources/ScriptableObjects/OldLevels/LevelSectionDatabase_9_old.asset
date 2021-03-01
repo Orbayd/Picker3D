@@ -10,14 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 689fa510ab77447cbb2f8ff3dccdd711, type: 3}
-  m_Name: LevelSectionDatabase_7
+  m_Name: LevelSectionDatabase_9_old
   m_EditorClassIdentifier: 
-  Level: 7
-  ExpectedProb: 10
+  Level: 9
+  ExpectedProb: 2
   ProbPositions:
-  - {x: 0.8, y: 0.59, z: 1.49}
-  - {x: -0.27, y: 0.59, z: 6.08}
-  - {x: -0.9, y: 0.59, z: -1.93}
-  - {x: 1.13, y: 0.59, z: 9.32}
-  ProbType: 03000000030000000300000003000000
-  BoardMaterial: {fileID: 0}
+  - {x: 0.15, y: 0.6, z: 2.0732477}
+  - {x: 0.57, y: 0.6, z: 2.0732477}
+  ProbType: 0000000000000000
+  BoardMaterial: {fileID: 2100000, guid: 06ce0489564244ba09c15d1b2807dbcf, type: 2}
