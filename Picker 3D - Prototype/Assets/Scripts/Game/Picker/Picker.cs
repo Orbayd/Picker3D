@@ -5,7 +5,7 @@ using UnityEngine;
 public class Picker : MonoBehaviour
 {
     [SerializeField]
-    float _speed = 4.0f;
+    private float _speed = 4.0f;
 
     private bool _isMoving = false;
 
@@ -23,19 +23,33 @@ public class Picker : MonoBehaviour
 
     }
     float _horizontal = 0.0f;
-
     public void SetInput(float horizontal)
     {
-        _horizontal = horizontal * 2.0f;
+
+       _horizontal += horizontal * 4.0f;
+       
     }
 
     public void FixedUpdate()
     {
         if (_isMoving)
         {
-            _rigidbody.MovePosition(transform.position
-                    + (transform.forward * Time.fixedDeltaTime * _speed)
-                    + transform.right * Time.fixedDeltaTime * _horizontal);
+            //Haram
+            if (transform.position.x < -1.38f)
+            {
+                this.transform.position = new Vector3(-1.37f, this.transform.position.y, this.transform.position.z);
+            }
+            else if (transform.position.x > 1.38f)
+            {
+                this.transform.position = new Vector3(1.37f, this.transform.position.y, this.transform.position.z);
+            }
+            else
+            {
+                _rigidbody.MovePosition(transform.position
+                          + (transform.forward * Time.fixedDeltaTime * _speed)
+                          + transform.right * Time.fixedDeltaTime * _horizontal);
+            }
+            _horizontal = 0;
             
         }
     }
@@ -84,38 +98,5 @@ public class Picker : MonoBehaviour
             _capturedProbs.Remove(probs);
         }
     }
-
-    //public Vector3 MaxExtends()
-    //{
-    //    var meshes = GetComponentsInChildren<MeshRenderer>();
-    //    float max = -100;
-    //    Vector3 position = this.transform.position;
-    //    foreach (var mesh in meshes)
-    //    {
-    //        if (mesh.bounds.max.z > max)
-    //        {
-    //            max = mesh.bounds.extents.z;
-    //            position = mesh.bounds.max;
-    //        }
-    //    }
-
-    //    return position;
-    //}
-    //public Vector3 MinExtends()
-    //{
-    //    var meshes = GetComponentsInChildren<MeshRenderer>();
-    //    float max = -100;
-    //    Vector3 position = this.transform.position;
-    //    foreach (var mesh in meshes)
-    //    {    
-    //        if (mesh.bounds.extents.y > max)
-    //        {
-    //            max = mesh.bounds.extents.y;
-    //            position = mesh.bounds.extents;
-    //        }
-    //    }
-
-    //    return position;
-    //}
 
 }

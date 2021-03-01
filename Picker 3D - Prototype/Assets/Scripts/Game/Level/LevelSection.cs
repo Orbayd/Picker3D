@@ -104,12 +104,22 @@ public class LevelSection : MonoBehaviour
         endPos.z += bounds;
         return endPos;
     }
-    public float MinExtend()
+    public float MinForwardExtend()
     {
         var bounds = StartSection.GetComponent<MeshRenderer>().bounds.extents.z;
         var startPos = StartSection.position;
         startPos.z -= bounds;
         return Vector3.Distance(startPos, transform.position);
+    }
+    /// <summary>
+    /// Extends of Level Sector
+    /// </summary>
+    /// <returns>Vector2 , x = min , y = max</returns>
+    public Vector2 RightExtends()
+    {
+        var bounds = StartSection.GetComponent<MeshRenderer>().bounds;
+
+        return new Vector2(bounds.min.x, bounds.max.x);
     }
     public Vector3 StartPosition()
     {

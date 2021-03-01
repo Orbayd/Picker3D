@@ -41,8 +41,12 @@ public class GamePlayState : GameStateBase
             _locator.Picker.Stop();
             _locator.ChangeGameState(new GameOverState(_locator));
         }
-
+        var input = Input.GetAxis("Horizontal");
+        Debug.Log($"Input {input}");
+       
         _locator.Picker.SetInput(Input.GetAxis("Horizontal"));
+       
+       
     }
 
     public override void OnExit()

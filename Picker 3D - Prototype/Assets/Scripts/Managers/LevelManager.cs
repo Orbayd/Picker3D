@@ -27,6 +27,7 @@ public class LevelManager : ManagerBase
 
     public override void Init(GameManager serviceLocator)
     {
+        _picker = serviceLocator.Picker;
         //var entity = serviceLocator.SaveManager.Load();
         SaveEntity entity = null;
         if (entity== null || !entity.IsSavedData)
@@ -56,10 +57,7 @@ public class LevelManager : ManagerBase
     public void Restart()
     {
         _currentSection.OnComplete();
-        
-        //_currentSection = Get(_currentLevel);
         _currentSection.Init(LevelDb.GetLevel(_currentLevel));
-
         _picker.Init(_currentSection.StartPosition());
     }
 
@@ -106,7 +104,7 @@ public class LevelManager : ManagerBase
     public void Attach(LevelSection from, LevelSection to)
     {
         var spawnPosition = from.EndPosition();
-        spawnPosition.z += to.MinExtend();
+        spawnPosition.z += to.MinForwardExtend();
 
         to.transform.position = spawnPosition;
     }
