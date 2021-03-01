@@ -24,10 +24,6 @@ public class LevelSection : MonoBehaviour
 
     public List<Probs> ActiveProbs = new List<Probs>();
     
-    public void Start()
-    {
- 
-    }
     public void Init(LevelSectionDatabase levelSectionDb)
     {
         this.gameObject.SetActive(true);
@@ -94,10 +90,6 @@ public class LevelSection : MonoBehaviour
                 prob.Begin();
             }
         }
-        else
-        {
-            
-        }
     }
 
     public bool IsEndSection(Vector3 player)
@@ -108,7 +100,6 @@ public class LevelSection : MonoBehaviour
     public Vector3 EndPosition()
     {
         var bounds = EndSection.GetComponent<MeshRenderer>().bounds.extents.z;
-        //Debug.Log($"[Info] Extends z {bounds}");
         var endPos = EndSection.transform.position;
         endPos.z += bounds;
         return endPos;
@@ -129,17 +120,8 @@ public class LevelSection : MonoBehaviour
     }
     public void CollectProbe(Probs prob)
     {
-        //this.DelayedAction(() =>
-        //{
-        //    ActiveProbs.Remove(prob);
-        //    ServiceLocator.Instance.PoolManager.Free(prob.gameObject);
-        //    //Destroy(prob.gameObject);
-
-        //}, 0.3f);
-
         FreeProbe(prob);
         CurrentProbCount++;
-        //Debug.Log($"[INFO] Current Prob {CurrentProbCount}");
     }
     public void FreeProbe(Probs prob)
     {
