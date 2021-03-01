@@ -27,7 +27,7 @@ public class LevelSection : MonoBehaviour
     public void Init(LevelSectionDatabase levelSectionDb)
     {
         this.gameObject.SetActive(true);
-        var poolManager = FindObjectOfType<PoolManager>();
+        var poolManager = FindObjectOfType<ProbPooler>();
         var probPositions = levelSectionDb.ProbPositions;
         ExpectedProbCount = levelSectionDb.ExpectedProb;
         LevelIndex = levelSectionDb.Level;
@@ -52,7 +52,7 @@ public class LevelSection : MonoBehaviour
         
         foreach (var probEntity in entity.ActiveProbs)
         {
-            var probGo = ServiceLocator.Instance.PoolManager.Get(probEntity.ProbType,probEntity.Position, Quaternion.identity);
+            var probGo = GameManager.Instance.Pooler.Get(probEntity.ProbType,probEntity.Position, Quaternion.identity);
             var prob = probGo.GetComponent<Probs>();
             ActiveProbs.Add(prob);
             prob.Init(probEntity.Velocity, probEntity.AngularVelocity);
@@ -63,7 +63,7 @@ public class LevelSection : MonoBehaviour
     {
         foreach (var prob in ActiveProbs)
         {   
-            ServiceLocator.Instance.PoolManager.Free(prob.gameObject);
+            GameManager.Instance.Pooler.Free(prob.gameObject);
         }
         ActiveProbs.Clear();
         
@@ -126,12 +126,12 @@ public class LevelSection : MonoBehaviour
     public void FreeProbe(Probs prob)
     {
         ActiveProbs.Remove(prob);
-        ServiceLocator.Instance.PoolManager.Free(prob.gameObject);
+        GameManager.Instance.Pooler.Free(prob.gameObject);
     }
 
     public GameObject CreateProb(ProbType type ,Vector3 position,Quaternion rotation)
     {
-        var prob = ServiceLocator.Instance.PoolManager.Get(type, position, rotation);
+        var prob = GameManager.Instance.Pooler.Get(type, position, rotation);
         ActiveProbs.Add(prob.GetComponent<Probs>());
         return prob;
        

@@ -13,10 +13,10 @@ public class ExposiveProb : Probs
         {
             for (int i = 0; i < ExplosiveCount; i++)
             {
-                ServiceLocator.Instance.LevelManager.CurrentSection.CreateProb(ExplosiveProbType, this.transform.position,Quaternion.identity);
+                GameManager.Instance.LevelManager.CurrentSection.CreateProb(ExplosiveProbType, this.transform.position,Quaternion.identity);
             }
 
-            ServiceLocator.Instance.LevelManager.CurrentSection.FreeProbe(this);
+            GameManager.Instance.LevelManager.CurrentSection.FreeProbe(this);
         }
     }
 }

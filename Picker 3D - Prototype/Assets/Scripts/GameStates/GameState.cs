@@ -15,8 +15,8 @@ public abstract class GameStateBase : IGameState
     public abstract void OnExecute();
     public abstract void OnExit();
 
-    protected ServiceLocator _locator;
-    public GameStateBase(ServiceLocator locator)
+    protected GameManager _locator;
+    public GameStateBase(GameManager locator)
     {
         _locator = locator;
     }
@@ -24,7 +24,7 @@ public abstract class GameStateBase : IGameState
 
 public class GamePlayState : GameStateBase
 {
-    public GamePlayState(ServiceLocator locator) : base(locator)
+    public GamePlayState(GameManager locator) : base(locator)
     {
         _locator.LevelManager.UpdateState(this);
         _locator.UIManager.UpdateState(this);
@@ -52,7 +52,7 @@ public class GamePlayState : GameStateBase
 }
 public class StartState : GameStateBase
 {
-    public StartState(ServiceLocator locator) : base(locator)
+    public StartState(GameManager locator) : base(locator)
     {
         
     }
@@ -79,7 +79,7 @@ public class StartState : GameStateBase
 
 public class GameOverState : GameStateBase
 { 
-    public GameOverState(ServiceLocator locator) : base(locator)
+    public GameOverState(GameManager locator) : base(locator)
     {
 
     }

@@ -4,15 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PoolManager : MonoBehaviour
+public class ProbPooler : MonoBehaviour
 {
-	//[SerializeField]
-	//private GameObject m_Original;
 
 	[SerializeField]
 	private GameObject[] _originals;
-
-	//protected Stack<GameObject> m_FreeInstances = new Stack<GameObject>();
 
 	protected Dictionary<ProbType, Stack<GameObject>> _freeInstances = new Dictionary<ProbType, Stack<GameObject>>();
 

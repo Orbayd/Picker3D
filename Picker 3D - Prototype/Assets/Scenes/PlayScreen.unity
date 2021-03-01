@@ -1401,7 +1401,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1269331741}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12889ca5aceb5483c8050205772f478c, type: 3}
+  m_Script: {fileID: 11500000, guid: 60a727c7d4e4c4139a3f61dbbab0b91e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _originals:
@@ -1434,7 +1434,7 @@ GameObject:
   - component: {fileID: 1406092442}
   - component: {fileID: 1406092441}
   m_Layer: 0
-  m_Name: Service Locator
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1449,10 +1449,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1406092440}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9dd9c3a330a95452280578be8de17063, type: 3}
+  m_Script: {fileID: 11500000, guid: 589df441aa9a940948f9de23e4363cdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _poolManager: {fileID: 1269331742}
+  _pooler: {fileID: 1269331742}
   _cameraManager: {fileID: 202163586}
   _levelManager: {fileID: 290054602}
   _saveManager: {fileID: 2128815291}

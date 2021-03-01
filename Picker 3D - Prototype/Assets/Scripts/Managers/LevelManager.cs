@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : ManagerBase
 {
     [SerializeField]
     private Picker Picker;
@@ -26,7 +26,7 @@ public class LevelManager : MonoBehaviour
         return _currentSection.IsEndSection(Picker.MaxExtends());
     }
 
-    public void Init(ServiceLocator serviceLocator)
+    public override void Init(GameManager serviceLocator)
     {
         //var entity = serviceLocator.SaveManager.Load();
         SaveEntity entity = null;
@@ -45,7 +45,7 @@ public class LevelManager : MonoBehaviour
             Picker.Init(entity.PlayerEntity.Position);
         }
     }
-    public void UpdateState(IGameState gameState)
+    public override void UpdateState(IGameState gameState)
     {
         CurrentSection.UpdateState(gameState);
     }

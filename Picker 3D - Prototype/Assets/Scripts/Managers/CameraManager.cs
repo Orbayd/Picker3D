@@ -5,7 +5,7 @@ using UnityEngine;
 /*
  * Basic Camera Follower
 */
-public class CameraManager : MonoBehaviour
+public class CameraManager : ManagerBase
 {
     public Camera Camera;
 
@@ -25,7 +25,7 @@ public class CameraManager : MonoBehaviour
         Camera.transform.LookAt(Picker.transform);
     }
 
-    internal void Init(ServiceLocator serviceLocator)
+    public override void Init(GameManager serviceLocator)
     {
         Picker = serviceLocator.Picker;
     }

@@ -5,7 +5,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
 
-public class SaveManager : MonoBehaviour
+public class SaveManager : ManagerBase
 {
     string _savePath;
 
@@ -13,7 +13,7 @@ public class SaveManager : MonoBehaviour
 
     LevelManager LevelManager;
 
-    public void Init(ServiceLocator locator)
+    public override void Init(GameManager locator)
     {
         LevelManager = locator.LevelManager;
         picker = locator.Picker;
@@ -66,5 +66,10 @@ public class SaveManager : MonoBehaviour
         File.WriteAllText(_savePath, json);
 
        
+    }
+
+    public override void UpdateState(IGameState gameState)
+    {
+        //Do nothing
     }
 }

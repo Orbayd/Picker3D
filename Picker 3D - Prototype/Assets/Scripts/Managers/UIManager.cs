@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIManager : MonoBehaviour
+public class UIManager : ManagerBase
 {
     [SerializeField]
     GameOverView GameOverView;
@@ -14,8 +14,8 @@ public class UIManager : MonoBehaviour
     GamePlayView GamePlayView;
 
 
-    ServiceLocator _serviceLocator;
-    public void Init(ServiceLocator serviceLocator)
+    GameManager _serviceLocator;
+    public override void Init(GameManager serviceLocator)
     {
         GameOverView.OnNextLevelButtonClicked += OnNextLevelButtonClicked;
         GameOverView.OnRestartButtonClicked += OnRestartButtonClicked;
@@ -51,7 +51,7 @@ public class UIManager : MonoBehaviour
         }
 
     }
-    public void UpdateState(IGameState gameState)
+    public override void UpdateState(IGameState gameState)
     {
         GamePlayView.Show(false);
         GameOverView.Show(false);

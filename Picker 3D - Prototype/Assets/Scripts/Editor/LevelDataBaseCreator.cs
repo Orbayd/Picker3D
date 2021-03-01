@@ -30,10 +30,6 @@ public class LevelDataBaseCreator : Editor
 
         var levelSection = _selectedObject.GetComponent<LevelSection>();
         var probs = _selectedObject.GetComponentsInChildren<Probs>();
-
-        var resourcePath = @"Assets/Resources/ScriptableObjects";
-
-      
         LevelSectionDatabase lvlDb = ScriptableObject.CreateInstance<LevelSectionDatabase>();
 
         lvlDb.ProbPositions = probs.Select(x=> x.transform.position).ToArray();

@@ -16,7 +16,7 @@ public class EndSection : MonoBehaviour
 
             this.DelayedAction(() =>
             {
-                ServiceLocator.Instance.PoolManager.Free(collision.gameObject);
+                GameManager.Instance.Pooler.Free(collision.gameObject);
                // Destroy(collision.gameObject,0);
             }, 2);
             //Destroy(collision.gameObject,2);

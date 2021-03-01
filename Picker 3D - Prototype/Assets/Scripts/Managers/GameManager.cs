@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ServiceLocator : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     [SerializeField]
-    PoolManager _poolManager;
+    ProbPooler _pooler;
 
     [SerializeField]
     CameraManager _cameraManager;
@@ -20,7 +20,7 @@ public class ServiceLocator : MonoBehaviour
     [SerializeField]
     UIManager _uiManager;
 
-    public PoolManager PoolManager => _poolManager;
+    public ProbPooler Pooler => _pooler;
     public CameraManager CameraManager => _cameraManager;
     public LevelManager LevelManager => _levelManager;
     public SaveManager SaveManager => _saveManager;
@@ -28,7 +28,7 @@ public class ServiceLocator : MonoBehaviour
 
     public Picker Picker;
 
-    public static ServiceLocator Instance;
+    public static GameManager Instance;
 
     GameStateBase _gameState;
     void Start()

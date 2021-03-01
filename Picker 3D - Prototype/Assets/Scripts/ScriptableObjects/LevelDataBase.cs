@@ -15,8 +15,8 @@ public class LevelDataBase : ScriptableObject
         var levelSection = Levels.FirstOrDefault(x => x.Level == level + 1);
         if (levelSection == null)
         {
-            UnityEngine.Random.seed = System.DateTime.Now.Millisecond;
-            var randInt = UnityEngine.Random.Range(1, 100);
+            Random.InitState(System.DateTime.Now.Millisecond);
+            var randInt = Random.Range(1, 100);
             var randomIndex = (int)randInt % (Levels.Count());
 
             levelSection = Levels[randomIndex];
