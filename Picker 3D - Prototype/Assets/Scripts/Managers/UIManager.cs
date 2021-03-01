@@ -38,6 +38,11 @@ public class UIManager : ManagerBase
     private void UpdateLevelInfo()
     {
         GamePlayView.SetLevel(_serviceLocator.LevelManager.CurrentLevel);
+        
+    }
+    public void UpdateScore()
+    {
+        GamePlayView.SetScore(_serviceLocator.LevelManager.CurrentSection.CurrentProbCount, _serviceLocator.LevelManager.CurrentSection.ExpectedProbCount);
     }
     private void UpdateGameOverInfo()
     {

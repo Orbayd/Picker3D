@@ -41,12 +41,18 @@ public class GamePlayState : GameStateBase
             _locator.Picker.Stop();
             _locator.ChangeGameState(new GameOverState(_locator));
         }
-        var input = Input.GetAxis("Horizontal");
-        Debug.Log($"Input {input}");
-       
+        //var input = Input.GetAxisRaw("Horizontal");
+        //Debug.Log($"Input {input}");
+#if UNITY_ANDROID
+        if (Input.GetTouch(0).phase == TouchPhase.Moved)
+        {
+           _locator.Picker.SetInput(Mathf.Clamp(Input.GetTouch(0).deltaPosition.x  * 0.1f,-2,2));
+        }
+#endif
+#if UNITY_EDITOR
         _locator.Picker.SetInput(Input.GetAxis("Horizontal"));
-       
-       
+#endif
+
     }
 
     public override void OnExit()
@@ -68,13 +74,20 @@ public class StartState : GameStateBase
 
     public override void OnExecute()
     {
-        var input = Input.GetAxis("Horizontal");
-        if (Mathf.Abs(input)> 0.1f)
+#if UNITY_ANDROID
+        if (Input.GetTouch(0).phase == TouchPhase.Moved)
         {
             _locator.ChangeGameState(new GamePlayState(_locator));
         }
+#endif
+#if UNITY_EDITOR
+        var input = Input.GetAxisRaw("Horizontal");
+        if (Mathf.Abs(input) > 0.1f)
+        {
+            _locator.ChangeGameState(new GamePlayState(_locator));
+        }
+#endif
     }
-
     public override void OnExit()
     {
      
@@ -99,7 +112,7 @@ public class GameOverState : GameStateBase
     }
     public override void OnExecute()
     {
-        
+        _locator.UIManager.UpdateScore();
     }
 
     public override void OnExit()
