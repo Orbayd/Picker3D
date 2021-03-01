@@ -18,4 +18,4 @@ MonoBehaviour:
   - {x: 0, y: 0.779, z: 0}
   - {x: 1.06, y: 0.779, z: 6.97}
   ProbType: 0400000004000000
-  BoardMaterial: {fileID: 0}
+  BoardMaterial: {fileID: 2100000, guid: 9e08bc5a17d2140978984330875d1427, type: 2}

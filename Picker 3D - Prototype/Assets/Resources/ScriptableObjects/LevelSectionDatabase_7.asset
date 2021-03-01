@@ -20,4 +20,4 @@ MonoBehaviour:
   - {x: -0.9, y: 0.59, z: -1.93}
   - {x: 1.13, y: 0.59, z: 9.32}
   ProbType: 03000000030000000300000003000000
-  BoardMaterial: {fileID: 0}
+  BoardMaterial: {fileID: 2100000, guid: 6dfeb390c588d4580be50a5656b42089, type: 2}
